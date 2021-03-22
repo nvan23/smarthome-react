@@ -1,0 +1,62 @@
+.containerHomeTab {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.homeTabItem {
+  margin-right: 10px;
+}
+
+.homeTabItem + .homeTabItem {
+  margin-bottom: 10px;
+}
+
+.room {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.light {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 20px;
+}
+
+.light + .light {
+  margin-left: 10px;
+}
+
+.lightIcon {
+  font-size: 26px;
+  margin-right: 10px;
+}
+
+.lightIcon--active {
+  color: #ffe900 !important;
+}
+
+.switchForLight {
+  margin-left: 10px !important;
+}
+
+.temperatureAndHumidity {
+  display: flex;
+  justify-content: flex-start;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.temperature {
+  margin: auto;
+}
+
+.humidity {
+  margin: auto;
+  margin-top: 30px;
+}
