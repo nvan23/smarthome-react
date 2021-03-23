@@ -15,6 +15,8 @@ import {
   BulbOutlined,
 } from '@ant-design/icons';
 
+import Room from './Room';
+import HomeTable from './HomeTable';
 import TempGauge from './TempGauge';
 import HumidityLiquid from './HumidityLiquid';
 import RoomSelection from './RoomSelection';
@@ -29,11 +31,37 @@ const { Header, Content } = Layout;
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
 
+
+
 const onChangeSwitch = (checked) => {
   console.log(`switch to ${checked}`);
 }
 
-const MainLayout = ({ payload }) => {
+const MainLayout = () => {
+  let home = [
+    {
+      roomName: 'Living',
+      lights: [
+        "Light number 1",
+        "Light number 2",
+      ],
+    },
+    {
+      roomName: 'Bedroom',
+      lights: [
+        "Light number 3",
+        "Light number 4",
+      ],
+    },
+    {
+      roomName: 'Kitchen',
+      lights: [
+        "Light number 5",
+        "Light number 6",
+      ],
+    }
+  ];
+
   return (
     <Layout>
       {/* <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
@@ -47,109 +75,18 @@ const MainLayout = ({ payload }) => {
         </Menu>
       </Header> */}
       <Content className="site-layout" style={{ padding: '0 20px' }}>
-
         <div className="site-layout-background" style={{ marginTop: 20, minHeight: 790 }}>
           <div className="card-container">
-            <Tabs defaultActiveKey="3" size="middle" style={{ marginBottom: 32 }}>
+            <Tabs defaultActiveKey="2" size="middle" style={{ marginBottom: 32 }}>
               <TabPane tab="Home" key="1">
                 <div className="containerHomeTab">
-                  <div className="homeTabItem">
-                    <Collapse collapsible="header" defaultActiveKey={['1']}>
-                      <Panel header="Living room" key="1">
-                        <div className='room'>
-                          <div className='light'>
-                            <BulbOutlined className='lightIcon' />
-                            <span style={{ fontSize: 20, }}>Light number 1</span>
-                            <Switch
-                              className='switchForLight'
-                              onChange={() => console.log('Turn on or off the light.')} />
-                          </div>
-                          <div className='light'>
-                            <BulbOutlined className='lightIcon lightIcon--active' />
-                            <span style={{ fontSize: 20, }}>Light number 2</span>
-                            <Switch
-                              defaultChecked
-                              className='switchForLight'
-                              onChange={() => console.log('Turn on or off the light.')} />
-                          </div>
-                        </div>
-                        <div className="temperatureAndHumidity">
-                          <div className="temperature">
-                            <TempGauge />
-                          </div>
-                          <div className="humidity">
-                            <HumidityLiquid />
-                          </div>
-                        </div>
-                      </Panel>
-                    </Collapse>
-                  </div>
-                  <div className="homeTabItem">
-                    <Collapse collapsible="header" defaultActiveKey={['1']}>
-                      <Panel header="Kitchen" key="1">
-                        <div className='room'>
-                          <div className='light'>
-                            <BulbOutlined className='lightIcon' />
-                            <span style={{ fontSize: 20, }}>Light number 1</span>
-                            <Switch
-                              className='switchForLight'
-                              onChange={() => console.log('Turn on or off the light.')} />
-                          </div>
-                          <div className='light'>
-                            <BulbOutlined className='lightIcon lightIcon--active' />
-                            <span style={{ fontSize: 20, }}>Light number 2</span>
-                            <Switch
-                              defaultChecked
-                              className='switchForLight'
-                              onChange={() => console.log('Turn on or off the light.')} />
-                          </div>
-                        </div>
-                        <div className="temperatureAndHumidity">
-                          <div className="temperature">
-                            <TempGauge />
-                          </div>
-                          <div className="humidity">
-                            <HumidityLiquid />
-                          </div>
-                        </div>
-                      </Panel>
-                    </Collapse>
-                  </div>
-                  <div className="homeTabItem">
-                    <Collapse collapsible="header">
-                      <Panel header="Bedroom" key="1">
-                        <div className='room'>
-                          <div className='light'>
-                            <BulbOutlined className='lightIcon' />
-                            <span style={{ fontSize: 20, }}>Light number 1</span>
-                            <Switch
-                              className='switchForLight'
-                              onChange={() => console.log('Turn on or off the light.')} />
-                          </div>
-                          <div className='light'>
-                            <BulbOutlined className='lightIcon lightIcon--active' />
-                            <span style={{ fontSize: 20, }}>Light number 2</span>
-                            <Switch
-                              defaultChecked
-                              className='switchForLight'
-                              onChange={() => console.log('Turn on or off the light.')} />
-                          </div>
-                        </div>
-                        <div className="temperatureAndHumidity">
-                          <div className="temperature">
-                            <TempGauge />
-                          </div>
-                          <div className="humidity">
-                            <HumidityLiquid />
-                          </div>
-                        </div>
-                      </Panel>
-                    </Collapse>
-                  </div>
+                  {
+                    home.length && home.map((h, index) => <Room roomName={h.roomName} lights={h.lights} key={index} />)
+                  }
                 </div>
               </TabPane>
               <TabPane tab="Management" key="2">
-                Content of tab 2
+                <HomeTable />
               </TabPane>
               <TabPane tab="Logger" key="3">
                 <RoomSelection />
