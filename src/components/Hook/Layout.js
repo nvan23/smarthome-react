@@ -77,7 +77,11 @@ const MainLayout = () => {
       <Content className="site-layout" style={{ padding: '0 20px' }}>
         <div className="site-layout-background" style={{ marginTop: 20, minHeight: 790 }}>
           <div className="card-container">
-            <Tabs defaultActiveKey="2" size="middle" style={{ marginBottom: 32 }}>
+            <Tabs
+              defaultActiveKey="2"
+              size="middle"
+              style={{ marginBottom: 32 }}
+              centered>
               <TabPane tab="Home" key="1">
                 <div className="containerHomeTab">
                   {
