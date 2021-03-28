@@ -4,10 +4,9 @@ import {
   Modal,
   Form,
   Input,
-  Radio,
-  Space,
   Card,
   Collapse,
+  message,
 } from 'antd';
 
 import {
@@ -15,7 +14,8 @@ import {
   CloseOutlined,
 } from '@ant-design/icons';
 
-import storage from "../../utils/storage";
+import handleAddRoom from '../store/addRoom';
+import storage from "../utils/storage";
 
 const addLightIcon = () => (
   <PlusOutlined
@@ -174,56 +174,20 @@ const CollectionCreateForm = ({ visible, onCreate, onCancel }) => {
 const AddRoom = (props) => {
   const [visible, setVisible] = useState(false);
 
-  console.log(props)
   let home = storage.get();
 
   const onCreate = (values) => {
     setVisible(false);
 
-    let newLights = [];
-    newLights.push({
-      id: values.lightName.trim().split(' ').join('').toLowerCase(),
-      name: values.lightPath.trim(),
-      active: false,
-    });
-
-    let newEFans = [];
-    newEFans.push({
-      id: values.eFanName.trim().split(' ').join('').toLowerCase(),
-      name: values.eFanPath.trim(),
-      active: false,
-    });
-
-    let newTemperatures = [];
-    newTemperatures.push({
-      id: values.temperaturePath,
-      values: [],
-    });
-
-    let newHumidities = [];
-    newHumidities.push({
-      id: values.humidityPath,
-      values: [],
-    });
-
-    let newRoom = {
-      id: values.roomName.trim().split(' ').join('').toLowerCase(),
-      roomName: values.roomName.trim(),
-      devices: {
-        lights: newLights,
-        eFans: newEFans,
-      },
-      sensors: {
-        temperatures: newTemperatures,
-        humidities: newHumidities,
-      },
-    };
+    let newRoom = handleAddRoom(values);
 
     home.push(newRoom);
 
     storage.set(home);
 
     props.onChangeDataTableSource(home);
+
+    message.success('Room added successfully.')
   };
 
   return (
@@ -243,6 +207,7 @@ const AddRoom = (props) => {
         onCreate={onCreate}
         onCancel={() => {
           setVisible(false);
+          message.error('Room added unsuccessfully.')
         }}
       />
     </div>

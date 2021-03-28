@@ -1,23 +1,33 @@
 import React, { useState } from 'react';
 
-import { Table, Tag, Space, Typography, Button, List } from 'antd';
+import {
+  Table,
+  Tag,
+  Space,
+  Typography,
+  List,
+  Modal,
+  message,
+} from 'antd';
+
 import {
   SyncOutlined,
-  BulbOutlined,
   DeleteOutlined,
   EditOutlined,
   HeartTwoTone,
+  ExclamationCircleOutlined,
 } from '@ant-design/icons';
 
 import AddRoom from './AddRoom';
 
-import storage from "../../utils/storage";
-import data from '../../fake-data/home';
+import storage from "../utils/storage";
+import data from '../fake-data/home';
 
 const HomeTable = () => {
 
   const { Column, ColumnGroup } = Table;
   const { Text, Link } = Typography;
+  const { confirm } = Modal;
 
   const [dataHomeTable, setHomeTableData] = useState(storage.get().reverse());
 
@@ -30,18 +40,42 @@ const HomeTable = () => {
     setHomeTableData(newValue.reverse());
   }
 
+  function removeRoom (index) {
+    let homeData = storage.get();
+    homeData.splice(index, 1);
+    setHomeTableData(homeData.reverse());
+    storage.set(homeData);
+    return true;
+  }
+
+  function deleteActionConfirm (index) {
+    confirm({
+      title: 'Do you want to delete these items?',
+      icon: <ExclamationCircleOutlined />,
+      content: 'When clicked the OK button, You agree to the loss of data of this room.',
+      onOk () {
+        removeRoom(index)
+          ? message.success('Room was successfully deleted.')
+          : message.error('Room was unsuccessfully deleted.')
+      },
+      onCancel () { },
+    });
+  }
+
+
   return (
     <>
       <AddRoom homData={dataHomeTable} onChangeDataTableSource={handleChangeDataTableSource} />
-      <Table dataSource={dataHomeTable} bordered>
+
+      <Table key='homeTableData' dataSource={dataHomeTable} bordered>
         <Column
           title="Room"
           dataIndex="roomName"
-          key="id"
+          key="roomName"
           align='center'
         />
 
-        <ColumnGroup title="Devices">
+        <ColumnGroup title="Devices" key="columnGroupDevices">
           {/* The Light */}
           <Column
             title="Light(s)"
@@ -95,7 +129,7 @@ const HomeTable = () => {
           />
         </ColumnGroup>
 
-        <ColumnGroup title="Sensors">
+        <ColumnGroup title="Sensors" key="columnGroupSensors">
           <Column
             title="Temperature"
             dataIndex="sensors.temperatures"
@@ -107,13 +141,12 @@ const HomeTable = () => {
                   {record.sensors.temperatures.length > 0
                     ? record.sensors.temperatures.map(
                       temperature => (
-                        <List.Item>
-                          {
-                            temperature.values.length > 0
-                              ? <Text>{temperature.id}: {temperature.values[temperature.values.length - 1] + '°C'}</Text>
-                              : <Text>Sensor not added.</Text>
-                          }
-                        </List.Item>
+                        temperature.values.length > 0
+                          ? <List.Item key={temperature.id} >
+                            <Text>{temperature.id}: {temperature.values[temperature.values.length - 1] + '°C'}</Text>
+                          </List.Item>
+                          : <Text key={temperature.id}>Sensor not added.</Text>
+
                       ))
                     : 'Sensor not added.'
                   }
@@ -133,13 +166,12 @@ const HomeTable = () => {
                   {record.sensors.humidities.length > 0
                     ? record.sensors.humidities.map(
                       humidity => (
-                        <List.Item>
-                          {
-                            humidity.values.length > 0
-                              ? <Text>{humidity.id}: {humidity.values[humidity.values.length - 1] + '°C'}</Text>
-                              : <Text>Sensor not added.</Text>
-                          }
-                        </List.Item>
+                        humidity.values.length > 0
+                          ? <List.Item key={humidity.id}>
+                            <Text>{humidity.id}: {humidity.values[humidity.values.length - 1] + '°C'}</Text>
+                          </List.Item>
+                          : <Text key={humidity.id}>Sensor not added.</Text>
+
                       ))
                     : 'Sensor not added.'
                   }
@@ -154,21 +186,21 @@ const HomeTable = () => {
           title="Action"
           key="action"
           align='center'
-          render={(text, record) => (
+          render={(text, record, index) => (
             <Space size="middle">
-              <Link href="" target="_blank">
+              <Link >
                 <HeartTwoTone twoToneColor="#eb2f96" />
               </Link>
-              <Link href="" target="_blank">
+              <Link >
                 <EditOutlined />
               </Link>
-              <Link href="" target="_blank" type='danger'>
+              <Link onClick={() => deleteActionConfirm(dataHomeTable.length - 1 - index)} type='danger'>
                 <DeleteOutlined />
               </Link>
             </Space>
           )}
         />
-      </Table>,
+      </Table>
 
     </>
   )

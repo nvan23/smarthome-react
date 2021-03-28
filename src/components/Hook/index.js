@@ -4,7 +4,6 @@ import ConnectionDefault from './ConnectionDefault';
 import Publisher from './Publisher';
 import Subscriber from './Subscriber';
 import Receiver from './Receiver';
-import MainLayout from './Layout';
 import mqtt from 'mqtt';
 
 export const QosOption = createContext([])
@@ -104,7 +103,6 @@ const HookMqtt = () => {
         <Publisher publish={mqttPublish} />
       </QosOption.Provider>
       <Receiver payload={payload} />
-      {/* <MainLayout payload={payload} /> */}
     </>
   );
 }

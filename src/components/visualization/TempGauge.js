@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Gauge } from '@ant-design/charts';
+
 const TempGauge = () => {
-  var [percent, setPercent] = useState(0);
-  var ref;
-  var ticks = [0, 1 / 3, 2 / 3, 1];
-  var color = ['#30BF78', '#FAAD14', '#F4664A'];
-  var config = {
+  const [percent, setPercent] = useState(0);
+  let ref;
+  let ticks = [0, 1 / 3, 2 / 3, 1];
+  let color = ['#30BF78', '#FAAD14', '#F4664A'];
+  let config = {
     percent,
     width: 160,
     height: 160,
@@ -60,8 +61,9 @@ const TempGauge = () => {
       },
     },
   };
+
   useEffect(() => {
-    var data = percent;
+    let data = percent;
     setInterval(function () {
       if (data >= 1) {
         data -= 0.8;
@@ -71,6 +73,7 @@ const TempGauge = () => {
       setPercent(data);
     }, 1000);
   }, []);
+
   return <Gauge {...config} chartRef={(chartRef) => (ref = chartRef)} />;
 };
 export default TempGauge;

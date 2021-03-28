@@ -8,8 +8,7 @@ import {
   BulbOutlined,
 } from '@ant-design/icons';
 
-import './layout.css';
-import './room.css';
+import '../../components/room.css';
 
 const Light = ({ lightName }) => {
   return (

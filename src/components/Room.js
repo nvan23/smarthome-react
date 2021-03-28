@@ -4,12 +4,9 @@ import {
   Collapse,
 } from 'antd';
 
-import Light from './Light';
-import TempGauge from './TempGauge';
-import HumidityLiquid from './HumidityLiquid';
-
-import './layout.css';
-import './room.css';
+import Light from './visualization/Light';
+import TempGauge from './visualization/TempGauge';
+import HumidityLiquid from './visualization/HumidityLiquid';
 
 const { Panel } = Collapse;
 

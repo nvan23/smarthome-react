@@ -1,41 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import {
   Layout,
-  Menu,
   Tabs,
-  Row,
-  Col,
-  Collapse,
-  Space,
-  Switch,
 } from 'antd';
 
-import {
-  BulbOutlined,
-} from '@ant-design/icons';
+import Room from '../Room';
+import HomeTable from '../HomeTable';
+import RoomSelection from '../RoomSelection';
+import LineChart from '../visualization/LineChart';
 
-import Room from './Room';
-import HomeTable from './HomeTable';
-import TempGauge from './TempGauge';
-import HumidityLiquid from './HumidityLiquid';
-import RoomSelection from './RoomSelection';
-import LineChart from './LineChart';
+// import '../../components/room.css';
 
-import './layout.css';
-import './room.css';
-
-import mainLogo from '../../assets/img/smart-home-logo.png';
-
-const { Header, Content } = Layout;
+const { Content } = Layout;
 const { TabPane } = Tabs;
-const { Panel } = Collapse;
-
-
-
-const onChangeSwitch = (checked) => {
-  console.log(`switch to ${checked}`);
-}
 
 const MainLayout = () => {
   let home = [
@@ -64,16 +42,9 @@ const MainLayout = () => {
 
   return (
     <Layout>
-      {/* <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-        <div className="logo" >
-          <img src={mainLogo} alt="smart home logo" />
-        </div>
-        <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
-          <Menu.Item key="1">Home</Menu.Item>
-          <Menu.Item key="2">Management</Menu.Item>
-          <Menu.Item key="3">Logger</Menu.Item>
-        </Menu>
-      </Header> */}
+      {/* Header */}
+
+      {/* Content */}
       <Content className="site-layout" style={{ padding: '0 20px' }}>
         <div className="site-layout-background" style={{ marginTop: 20, minHeight: 790 }}>
           <div className="card-container">
@@ -85,12 +56,18 @@ const MainLayout = () => {
               <TabPane tab="Home" key="1">
                 <div className="containerHomeTab">
                   {
-                    home.length && home.map((h, index) => <Room roomName={h.roomName} lights={h.lights} key={index} />)
+                    home.length && home.map(
+                      (h, index) =>
+                        <Room
+                          key={index}
+                          roomName={h.roomName}
+                          lights={h.lights}
+                        />)
                   }
                 </div>
               </TabPane>
               <TabPane tab="Management" key="2">
-                <HomeTable />
+                <HomeTable key="homeTable" />
               </TabPane>
               <TabPane tab="Logger" key="3">
                 <RoomSelection />

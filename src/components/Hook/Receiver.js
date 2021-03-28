@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, List } from 'antd';
 import { Line } from '@ant-design/charts';
 
@@ -7,7 +7,6 @@ const Receiver = ({ payload }) => {
   let counter = 0;
 
   useEffect(() => {
-    console.log(payload)
     if (payload.topic) {
       setMessages(messages => [...messages, payload])
     }
