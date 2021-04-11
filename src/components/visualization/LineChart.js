@@ -39,6 +39,7 @@ const LineChart = () => {
       value: 13,
     },
   ];
+
   var config = {
     data: data,
     xField: 'year',

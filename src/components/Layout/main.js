@@ -10,6 +10,8 @@ import HomeTable from '../HomeTable';
 import RoomSelection from '../RoomSelection';
 import LineChart from '../visualization/LineChart';
 
+import HookMqtt from '../Hook/'
+
 // import '../../components/room.css';
 
 const { Content } = Layout;
@@ -49,7 +51,7 @@ const MainLayout = () => {
         <div className="site-layout-background" style={{ marginTop: 20, minHeight: 790 }}>
           <div className="card-container">
             <Tabs
-              defaultActiveKey="2"
+              defaultActiveKey="4"
               size="middle"
               style={{ marginBottom: 32 }}
               centered>
@@ -72,6 +74,9 @@ const MainLayout = () => {
               <TabPane tab="Logger" key="3">
                 <RoomSelection />
                 <LineChart />
+              </TabPane>
+              <TabPane tab="Hook MQTT" key="4">
+                <HookMqtt />
               </TabPane>
             </Tabs>
           </div>,

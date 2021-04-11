@@ -1,6 +1,8 @@
 import React from 'react';
 import { Card, Button, Form, Input, Row, Col } from 'antd';
 
+import './base.css'
+
 const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
   const [form] = Form.useForm();
   const record = {
@@ -9,8 +11,16 @@ const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
     port: 8080,
   };
   const onFinish = (values) => {
-    const { host, clientId, port, username, password } = values;
+    const {
+      host = record.host,
+      clientId = record.clientId,
+      port = record.port,
+      username = '',
+      password = '',
+    } = values;
+
     const url = `ws://${host}:${port}/mqtt`;
+
     const options = {
       keepalive: 30,
       protocolId: 'MQTT',
@@ -26,6 +36,7 @@ const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
       },
       rejectUnauthorized: false
     };
+
     options.clientId = clientId;
     options.username = username;
     options.password = password;
@@ -49,7 +60,7 @@ const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
       onFinish={onFinish}
     >
       <Row gutter={20}>
-        <Col span={8}>
+        <Col xs={{ span: 8 }}>
           <Form.Item
             label="Host"
             name="host"
@@ -57,7 +68,7 @@ const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col xs={{ span: 8 }}>
           <Form.Item
             label="Port"
             name="port"
@@ -65,7 +76,7 @@ const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col xs={{ span: 8 }}>
           <Form.Item
             label="Client ID"
             name="clientId"
@@ -73,7 +84,7 @@ const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col xs={{ span: 8 }}>
           <Form.Item
             label="Username"
             name="username"
@@ -81,7 +92,7 @@ const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col xs={{ span: 8 }}>
           <Form.Item
             label="Password"
             name="password"
@@ -94,15 +105,22 @@ const ConnectionDefault = ({ connect, disconnect, connectBtn }) => {
   )
 
   return (
-    <Card
-      title="Connection"
-      actions={[
-        <Button type="primary" onClick={handleConnect}>{connectBtn}</Button>,
-        <Button danger onClick={handleDisconnect}>Disconnect</Button>
-      ]}
-    >
-      {ConnectionForm}
-    </Card>
+    <>
+      <Row>
+        <Col span={24}>
+          <Card
+            title="Connection"
+            className="ant-cart-full-width"
+            actions={[
+              <Button type="primary" onClick={handleConnect}>{connectBtn}</Button>,
+              <Button danger onClick={handleDisconnect}>Disconnect</Button>
+            ]}
+          >
+            {ConnectionForm}
+          </Card>
+        </Col>
+      </Row>
+    </>
   );
 }
 
